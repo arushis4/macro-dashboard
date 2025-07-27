@@ -180,6 +180,8 @@ def update_chart(indicator, start_date, end_date):
 if __name__ == '__main__':
     app.run_server(debug=False, host="0.0.0.0", port=8080)
 
+server = app.server
+
 # Need to Add
  # AI generated analysis
  # Flags for key economic events
