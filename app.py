@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import pandas as pd
 from fredapi import Fred
 from dash import Dash
@@ -11,16 +8,8 @@ from dash import dcc, html, Input, Output
 import plotly.graph_objs as go
 from datetime import datetime
 
-
-# In[2]:
-
-
 # Initialize Fred API with my key
 fred = Fred(api_key='f51eb3a1cdbac7e83b7cc82e96f3fb86')
-
-
-# In[3]:
-
 
 # Define the indicators to fetch
 indicators = {
@@ -32,10 +21,6 @@ indicators = {
     'New Orders Index': 'AMTMNO',
     'Fed Funds Rate': 'FEDFUNDS'
 }
-
-
-# In[4]:
-
 
 def get_data():
     data = {}
@@ -60,10 +45,6 @@ def get_data():
 # Load the data
 df = get_data()
 
-
-# In[5]:
-
-
 def generate_ai_summary(series):
     if len(series) < 2:
         return "Not enough data to summarize."
@@ -80,16 +61,8 @@ def generate_ai_summary(series):
         f"The peak value was {max_val:.2f}, and the lowest was {min_val:.2f}."
     )
 
-
-# In[6]:
-
-
 # Initialize the Dash app
 app = Dash(__name__)
-
-
-# In[7]:
-
 
 # Define the app layout
 app.layout = html.Div(
@@ -162,10 +135,6 @@ app.layout = html.Div(
     ]
 )
 
-
-# In[8]:
-
-
 @app.callback(
     [Output('indicator-graph', 'figure'),
      Output('ai-summary', 'children'),
@@ -207,17 +176,9 @@ def update_chart(indicator, start_date, end_date):
 
     return fig, summary_text, last_updated_text
 
-
-# In[9]:
-
-
 # Run the app
 if __name__ == '__main__':
-    app.run_server(mode='external')
-
-
-# In[10]:
-
+    app.run_server(debug=False, host="0.0.0.0", port=8080)
 
 # Need to Add
  # AI generated analysis
