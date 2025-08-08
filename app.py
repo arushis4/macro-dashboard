@@ -176,7 +176,7 @@ def update_chart(indicator, start_date, end_date):
                 "yref": "paper",
                 "text": event["label"],
                 "showarrow": False,
-                "font": {"color": "red", "size": 10},
+                "font": {"color": "red", "size": 10, style: "bold"},
                 "align": "center"
             })
 
