@@ -67,15 +67,6 @@ def generate_ai_summary(series):
         f"the value has {trend} by {abs(pct_change):.2f}%. "
         f"The peak value was {max_val:.2f}, and the lowest was {min_val:.2f}."
     )
-
-    # Add notable events
-    events_in_range = [
-        e for e in key_events
-        if series.index[0] <= pd.to_datetime(e["date"]) <= series.index[-1]
-    ]
-    if events_in_range:
-        event_text = "; ".join([f"{e['label']} on {e['date']}" for e in events_in_range])
-        summary += f" Notable events during this time: {event_text}."
     
     return summary
 
