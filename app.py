@@ -153,34 +153,56 @@ def update_chart(indicator, start_date, end_date):
         name=indicator
     )
 
-    # Add economic event flags
+    # Prepare event data for this range
+    visible_events = [
+        e for e in key_events if pd.to_datetime(start_date) <= pd.to_datetime(e["date"]) <= pd.to_datetime(end_date)
+    ]
+
+    # Add economic event flag lines
     event_shapes = []
     event_annotations = []
-    for event in key_events:
+    for event in visible_events:
         event_date = pd.to_datetime(event["date"])
-        if pd.to_datetime(start_date) <= event_date <= pd.to_datetime(end_date):
-            event_shapes.append({
-                "type": "line",
-                "x0": event_date,
-                "x1": event_date,
-                "y0": 0,
-                "y1": 1,
-                "xref": "x",
-                "yref": "paper",
-                "line": {"color": "red", "width": 1, "dash": "dot"}
-            })
-            event_annotations.append({
-                "x": event_date,
-                "y": 1.02,
-                "xref": "x",
-                "yref": "paper",
-                "text": event["label"],
-                "showarrow": False,
-                "font": {"color": "red", "size": 10, style: "bold"},
-                "align": "center"
-            })
+        event_shapes.append({
+            "type": "line",
+            "x0": event_date,
+            "x1": event_date,
+            "y0": 0,
+            "y1": 1,
+            "xref": "x",
+            "yref": "paper",
+            "line": {"color": "red", "width": 1, "dash": "dot"}
+        })
+        event_annotations.append({
+            "x": event_date,
+            "y": 1.02,
+            "xref": "x",
+            "yref": "paper",
+            "text": event["label"],
+            "showarrow": False,
+            "font": {"color": "red", "size": 10, "family": "Arial"},
+            "align": "center"
+        })
 
-    fig = go.Figure(data=[trace])
+    # Create scatter points for hoverable event markers
+    if len(visible_events) > 0:
+        event_marker_dates = [pd.to_datetime(e["date"]) for e in visible_events]
+        event_marker_labels = [e["label"] for e in visible_events]
+        event_marker_y = [filtered_series.max()] * len(visible_events)
+
+        event_markers = go.Scatter(
+            x=event_marker_dates,
+            y=event_marker_y,
+            mode='markers',
+            marker=dict(color='red', size=8, symbol='x'),
+            text=event_marker_labels,
+            hoverinfo='text',
+            name='Key Events'
+        )
+        fig = go.Figure(data=[trace, event_markers])
+    else:
+        fig = go.Figure(data=[trace])
+
     fig.update_layout(
         title=f"{indicator} Over Time",
         xaxis_title='Date',
