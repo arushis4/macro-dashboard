@@ -26,7 +26,8 @@ key_events = [
     {"date": "2008-09-15", "label": "Lehman Brothers Collapse"},
     {"date": "2020-03-16", "label": "COVID-19 Market Crash"},
     {"date": "2022-03-16", "label": "First Fed Rate Hike (Post-COVID)"},
-    {"date": "2023-06-14", "label": "Fed Pauses Rate Hikes"}
+    {"date": "2023-06-14", "label": "Fed Pauses Rate Hikes"},
+    {"date": "2025-01-15", "label": "Trump Tariffs Announced"},
 ]
 
 # Fetch and prepare data
