@@ -173,16 +173,6 @@ def update_chart(indicator, start_date, end_date):
             "yref": "paper",
             "line": {"color": "red", "width": 1, "dash": "dot"}
         })
-        event_annotations.append({
-            "x": event_date,
-            "y": 1.02,
-            "xref": "x",
-            "yref": "paper",
-            "text": event["label"],
-            "showarrow": False,
-            "font": {"color": "red", "size": 10, "family": "Arial"},
-            "align": "center"
-        })
 
     # Create scatter points for hoverable event markers
     if len(visible_events) > 0:
@@ -216,7 +206,6 @@ def update_chart(indicator, start_date, end_date):
         margin=dict(l=40, r=40, t=60, b=60),
         hovermode='x unified',
         shapes=event_shapes,
-        annotations=event_annotations
     )
 
     summary_text = generate_ai_summary(filtered_series)
